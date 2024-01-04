@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.shortcuts import HttpResponse
 import os
@@ -20,7 +20,7 @@ def index(request):
     
     context['slider'] = Slider.objects.all()
     context['services'] = Services.objects.all()[:4]
-    context['news'] = News.objects.all()[:3]
+    context['latestNews'] = News.objects.all()[:3]
 
     return render(request, 'index.html', context)
     
@@ -52,19 +52,27 @@ def services(request):
     context = {
         'service':service
     }
+    context['latestNews'] = News.objects.order_by('-created_at')[:3]
+
     return render(request, 'services.html', context)
 
 def news(request):
     search = ''
     if request.GET.get('search'):
         search = request.GET.get('search')
-
+    
     page = 1
     if request.GET.get('page'):
         page = int(request.GET.get('page'))
 
-    rows = News.objects.all()
-    paginator = Paginator(rows, 6)
+    query = ''
+    if request.GET.get('query'):
+        query = request.GET.get('query')
+
+    rows = News.objects.all().filter(title__icontains=search).order_by('-created_at')
+    
+
+    paginator = Paginator(rows, 5)
 
     next_page = page + 1 if (page + 1) <= len(paginator.page_range) else page
     previous_page = page - 1 if (page - 1) != 0 else page
@@ -73,8 +81,8 @@ def news(request):
     # news = News.objects.all()
     
     context = {
-        'rows': rows,
-        'result_count': f"Показано {6} из {len(rows)}",
+        'rows': paginator.page(page),
+        'result_count': f"Показано {5} из {len(rows)}",
         'news': paginator.page(page),
         'pages': paginator.page_range, 
         'current_page': page,
@@ -116,14 +124,36 @@ def contact(request):
         message = request.POST.get('message')
         row = Applications.objects.create(name = name, email = email, message = message)
         row.save()
-    return render(request, 'contact.html')
+
+    context = {}
+    context['latestNews'] = News.objects.order_by('-created_at')[:3]
+
+    return render(request, 'contact.html', context)
 
 def about(request):
-    return render(request, 'about-us.html')
 
+    about = About.objects.all()
 
+    context = {
+        'about': about,
+        'video': MainVideo.objects.all().first()
+    }
+    context['latestNews'] = News.objects.order_by('-created_at')[:3]
 
-
+    return render(request, 'about-us.html', context)
+ 
 def get_doctors(request, speciality_id):
     doctors = Doctors.objects.filter(speciality_id=speciality_id).values('id', 'name')
     return JsonResponse(list(doctors), safe=False)
+
+def saveMail(request):
+    mail = request.POST.get('mail')
+    Subscriptions.objects.create(mail=mail).save()
+    return redirect('index')
+
+def video(request):
+    rows = MainVideo.objects.all()
+    context = {
+        'rows': rows
+    }
+    return render(request, 'video.html', context)

@@ -33,7 +33,7 @@
                                 <!-- Post Thumbnail -->
                                 <div class="blog-post-thumbnail">
                                    
-                                    <img src={{row.image.url}} alt="">
+                                    <img src={{row.image.url}} alt="" style="width: 400px; height: 350px;">
                                     <!-- Post Date -->
                                     <div class="post-date">
                                         <a href="#">{{row.created_at}}</a>
@@ -45,8 +45,8 @@
                                         <a href="#"><img src="{% static 'assets/img/blog-img/logo.png' %}" alt=""></a>
                                     </div>
                                     <a href="{% url 'newsDetails' row.id %}" class="headline">{{row.title}}</a>
-                                    <p>{{row.description}}</p>
-                                    <a href="#" class="comments">3 Comments</a>
+                                    <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">{{row.description}}</p>
+                                    <a href="#" class="comments">{{ row.count_comments }}</a>
                                 </div>
                             
                             </div>
@@ -62,8 +62,8 @@
 
                         <!-- Search Widget -->
                         <div class="search-widget-area mb-50">
-                            <form action="#" method="get">
-                                <input type="search" placeholder="Type Any Keywords">
+                            <form action="{% url 'news' %}" method="get">
+                                <input type="search" name="search" placeholder="Type Any Keywords">
                                 <input type="submit" value="Search">
                             </form>
                         </div>
@@ -124,7 +124,7 @@
                             <ul class="pagination">
                                 <li class="page-item"><a class="page-link" href="?page={{previous_page}}">Previous Page</a></li>
                                 {% for page in pages %}
-                                    <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                                    <li class="{% if page == current_page %}active{% endif %}"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
                                 {% endfor %}
                                 <li class="page-item"><a class="page-link" href="?page={{next_page}}">Next Page</a></li>
                             </ul>

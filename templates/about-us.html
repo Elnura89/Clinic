@@ -24,7 +24,7 @@
                     <div class="features-content">
                         <h2>We always put our pacients first</h2>
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.Lorem ipsum dolor sit amet, consec tetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer.</p>
-                        <a href="#" class="btn medilife-btn mt-50">View the services <span>+</span></a>
+                        <a href="{% url 'services' %}" class="btn medilife-btn mt-50">View the services <span>+</span></a>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
@@ -43,10 +43,10 @@
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
                     <div class="video-box bg-overlay-black">
-                        <img src="{% static 'assets/img/bg-img/video2.jpg' %}" alt="">
+                        <img src="{{video.video_image.url}}" alt="">
                         <div class="play-btn">
-                            <a class="popup-video" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="img/core-img/play.png" alt=""></a>
-                            <h6>A day at Medilife-Video</h6>
+                            <a class="banner__video--thumbnail__img display-block" href="{{video.video_file.url}}"><img src="{{video.video_image.url}}" alt="banner-bideo-thumbnail"></a>
+                            <h6>{{video.title}}</h6>
                         </div>
                     </div>
                 </div>
@@ -114,15 +114,22 @@
 
     <!-- ***** Tabs Area Start ***** -->
     <section class="medilife-tabs-area section-padding-100">
+       
         <div class="container">
+            
             <div class="row">
+                
                 <div class="col-12">
+                    
                     <div class="medilife-tabs-content">
+                        
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            {% for row in about %}
                             <li class="nav-item">
-                                <a class="nav-link" id="institution-tab" data-toggle="tab" href="#institution" role="tab" aria-controls="institution" aria-selected="false">Institution</a>
+                                <a class="nav-link" id="{{row.id}}" data-toggle="tab" href="#institution" role="tab" aria-controls="{{row.id}}" aria-selected="false">{{row.title}}</a>
                             </li>
-                            <li class="nav-item">
+                            {% endfor %}
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" id="faq-tab" data-toggle="tab" href="#faq" role="tab" aria-controls="faq" aria-selected="false">FAQ</a>
                             </li>
                             <li class="nav-item">
@@ -136,93 +143,101 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="scolarship-tab" data-toggle="tab" href="#scolarship" role="tab" aria-controls="scolarship" aria-selected="false">Scolarship Programs</a>
-                            </li>
+                            </li> -->
                         </ul>
 
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade" id="institution" role="tabpanel" aria-labelledby="institution-tab">
+                            {% for row in about %}
+                            <div class="tab-pane fade" id="institution" role="tabpanel" aria-labelledby="{{row.id}}">
                                 <div class="medilife-tab-content d-md-flex align-items-center">
                                     <!-- Medilife Tab Text  -->
                                     <div class="medilife-tab-text">
-                                        <h2>Take a look at this</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
+                                        <h2>{{row.title}}</h2>
+                                        <p>{{row.description}}</p>
                                     </div>
                                     <!-- Medilife Tab Img  -->
                                     <div class="{% static 'assets/medilife-tab-img' %}">
-                                        <img src="{% static 'assets/img/bg-img/about1.jpg' %}" alt="">
+                                        <img src="{{row.image.url}}" alt="">
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
-                                <div class="medilife-tab-content d-md-flex align-items-center">
-                                    <!-- Medilife Tab Text  -->
-                                    <div class="medilife-tab-text">
+                        {% endfor %}
+
+                            <!-- <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab"> -->
+                                <!-- <div class="medilife-tab-content d-md-flex align-items-center">
+                                    Medilife Tab Text  --> 
+                                    <!-- <div class="medilife-tab-text">
                                         <h2>Take a look at this</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
-                                    </div>
+                                    </div> -->
                                     <!-- Medilife Tab Img  -->
-                                    <div class="medilife-tab-img">
+                                    <!-- <div class="medilife-tab-img">
                                         <img src="{% static 'assets/img/bg-img/medical1.png' %}" alt="">
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade show active" id="specialities" role="tabpanel" aria-labelledby="specialities-tab">
-                                <div class="medilife-tab-content d-md-flex align-items-center">
+                                <div class="medilife-tab-content d-md-flex align-items-center"> -->
                                     <!-- Medilife Tab Text  -->
-                                    <div class="medilife-tab-text">
+                                    <!-- <div class="medilife-tab-text">
                                         <h2>Take a look at this</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
-                                    </div>
+                                    </div> -->
                                     <!-- Medilife Tab Img  -->
-                                    <div class="medilife-tab-img">
+                                    <!-- <div class="medilife-tab-img">
                                         <img src="{% static 'assets/img/bg-img/tab.jpg' %}" alt="">
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="laboratory" role="tabpanel" aria-labelledby="laboratory-tab">
                                 <div class="medilife-tab-content d-md-flex align-items-center">
-                                    <!-- Medilife Tab Text  -->
+                                    Medilife Tab Text 
                                     <div class="medilife-tab-text">
                                         <h2>Take a look at this</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
-                                    </div>
+                                    </div> -->
                                     <!-- Medilife Tab Img  -->
-                                    <div class="medilife-tab-img">
+                                    <!-- <div class="medilife-tab-img">
                                         <img src="{% static 'assets/img/bg-img/medical1.png' %}" alt="">
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="emergencies" role="tabpanel" aria-labelledby="emergencies-tab">
-                                <div class="medilife-tab-content d-md-flex align-items-center">
+                                <div class="medilife-tab-content d-md-flex align-items-center"> -->
                                     <!-- Medilife Tab Text  -->
-                                    <div class="medilife-tab-text">
+                                    <!-- <div class="medilife-tab-text">
                                         <h2>Take a look at this</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
-                                    </div>
+                                    </div> -->
                                     <!-- Medilife Tab Img  -->
-                                    <div class="medilife-tab-img">
+                                    <!-- <div class="medilife-tab-img">
                                         <img src="{% static 'assets/img/bg-img/about1.jpg' %}" alt="">
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="scolarship" role="tabpanel" aria-labelledby="scolarship-tab">
-                                <div class="medilife-tab-content d-md-flex align-items-center">
+                                <div class="medilife-tab-content d-md-flex align-items-center"> -->
                                     <!-- Medilife Tab Text  -->
-                                    <div class="medilife-tab-text">
+                                    <!-- <div class="medilife-tab-text">
                                         <h2>Take a look at this</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
-                                    </div>
+                                    </div> -->
                                     <!-- Medilife Tab Img  -->
-                                    <div class="medilife-tab-img">
+                                    <!-- <div class="medilife-tab-img">
                                         <img src="{% static 'assets/img/bg-img/medical1.png' %}" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
+                            
                         </div>
+                        
                     </div>
+                   
                 </div>
             </div>
+            
         </div>
+        
     </section>
     <!-- ***** Tabs Area End ***** -->
 

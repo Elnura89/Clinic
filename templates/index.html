@@ -14,8 +14,12 @@
                             
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">{{row.title}} <br>You can Trust 100%</h2>
-                                <h6 data-animation="fadeInUp" data-delay="400ms">{{row.tetx}}</h6>
-                                <a href="{% url 'about' %}" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover Medifile <span>+</span></a>
+                                <h6 data-animation="fadeInUp" data-delay="400ms">{{row.text}}</h6>
+                                
+
+                                <a href="{% url row.url %}" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover Medifile <span>+</span></a>
+                                
+
                             </div>
                             
                         </div>
@@ -179,7 +183,8 @@
                         <div class="col-12 col-sm-6">
                             <div class="single-service-area d-flex">
                                 <div class="service-icon">
-                                    <i class="icon-doctor"></i>
+                                    <!-- <i class="icon-doctor"></i> -->
+                                    <img style="border-radius: 300%;" src="{{row.icon.url}}" alt="">
                                 </div>
                                 <div class="service-content">
                                     <h5>{{row.title}}</h5>
@@ -245,7 +250,7 @@
         {% for row in galery %}
         <!-- Single Gallery Item -->
         <div class="single-gallery-item">
-            <img src={{row.image.url}} alt="">
+            <img src={{row.image.url}} alt="" style="width: 300px; height: 400px;">
             <div class="view-more-btn">
                 <a href={{row.image.url}} class="btn gallery-img">See More +</a>
             </div>
@@ -319,7 +324,7 @@
                                 <a href="#"><img src="{% static 'assets/img/blog-img/logo.png' %}" alt=""></a>
                             </div>
                             <a href="#" class="headline">{{rows.title}}</a>
-                            <p>{{rows.description}}</p>
+                            <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">{{rows.description}}</p>
                             <a href="#" class="comments">3 Comments</a>
                         </div>
                     </div>

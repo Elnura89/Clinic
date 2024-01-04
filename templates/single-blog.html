@@ -43,12 +43,12 @@
                             </div>
                             <p>{{row.description}}</p>
                         </div>
-                        <!-- {% for img in images %} -->
-                        <img src="{{images.url}}" alt="">
-                        <!-- {% endfor %} -->
+                        {% for img in images %}
+                            <img src="{{img.image.url}}" alt="">
+                        {% endfor %} 
                         <!-- Post Content -->
                         <div class="post-content">
-                            <p>{{row.description}}</p>
+                            <p></p>
                         </div>
                     </div>
 
@@ -56,16 +56,16 @@
                         <h5>Comments</h5>
                         <ol>
                             <!-- Single Comment Area -->
+                            {% for i in comments %}
+
                             <li class="single_comment_area">
                                 <div class="comment-wrapper d-flex">
-                                    {% csrf_token %}
                                     <!-- Comment Meta -->
                                     <div class="comment-author">
                                         <img src="{% static 'assets/img/blog-img/6.jpg' %}" alt="">
                                     </div>
                                     <!-- Comment Content -->
                                     <div class="comment-content">
-                                        {% for i in comments %}
                                         <div class="comment-meta">
                                             <a href="#" class="comment-author-name">{{i.user}}</a> |
                                             <a href="#" class="comment-date">{{i.created_at}}</a> |
@@ -73,17 +73,17 @@
                                             <a href="#" class="comment-reply">Reply</a>
                                         </div>
                                         <p>{{i.message}}</p>
+
                                     </div>
-                                    {% endfor %}
                                 </div>
-                                <ol class="children">
+                                <!-- <ol class="children">
                                     <li class="single_comment_area">
                                         <div class="comment-wrapper d-flex">
-                                            <!-- Comment Meta -->
+                                            
                                             <div class="comment-author">
                                                 <img src="{% static 'assets/img/blog-img/7.jpg' %}" alt="">
                                             </div>
-                                            <!-- Comment Content -->
+                                            
                                             <div class="comment-content">
                                                 <div class="comment-meta">
                                                     <a href="#" class="comment-author-name">Maria Williams</a> |
@@ -94,25 +94,11 @@
                                             </div>
                                         </div>
                                     </li>
-                                </ol>
+                                </ol>  -->
                             </li>
-                            <li class="single_comment_area">
-                                <div class="comment-wrapper d-flex">
-                                    <!-- Comment Meta -->
-                                    <div class="comment-author">
-                                        <img src="{% static 'assets/img/blog-img/6.jpg' %}" alt="">
-                                    </div>
-                                    <!-- Comment Content -->
-                                    <div class="comment-content">
-                                        <div class="comment-meta">
-                                            <a href="#" class="comment-author-name">Maria Williams</a> |
-                                            <a href="#" class="comment-date">Jan 29, 2018</a> |
-                                            <a href="#" class="comment-reply">Reply</a>
-                                        </div>
-                                        <p>Consectetur adipiscing elit. Praesent vel tortor facilisis, volutpat nulla placerat, tincidunt mi. Nullam vel orci dui. Su spendisse sit amet laoreet neque. Fusce sagittis suscipit sem a consequat.</p>
-                                    </div>
-                                </div>
-                            </li>
+                            {% endfor %}
+
+                            
                         </ol>
                     </div>
 
@@ -122,12 +108,14 @@
                             <h5>Leave a reply</h5>
 
                             <!-- Comment Form -->
-                            <form action="#" method="post">
+                            <form action="{% url 'comments' row.id%}" method="post">
+                                {% csrf_token %}
+
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="contact-name" placeholder="Name">
+                                    <input name="user" type="text" class="form-control" id="contact-name" placeholder="Name">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="contact-email" placeholder="Email">
+                                    <input name="email" type="email" class="form-control" id="contact-email" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea>

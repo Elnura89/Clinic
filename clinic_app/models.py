@@ -47,6 +47,25 @@ class Slider(models.Model):
     image = models.ImageField()
     title = models.CharField(max_length=255)
     text = models.TextField()
+    url = models.TextField()
 
 class Galery(models.Model):
     image = models.ImageField()
+
+class Message(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    message = models.TextField()
+
+class Subscriptions(models.Model):
+    mail = models.TextField(max_length=250)
+
+class About(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(max_length=700)
+    image = models.ImageField()
+
+class MainVideo(models.Model):
+    title = models.CharField(max_length=255)
+    video_file = models.FileField(upload_to='videos/')
+    video_image = models.ImageField(upload_to='videosImages/') 

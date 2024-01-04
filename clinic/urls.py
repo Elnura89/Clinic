@@ -31,6 +31,8 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('about/', about, name='about'),
     path('api/get_doctors/<int:speciality_id>/', get_doctors, name='get_doctors'),
+    path('mail/', saveMail, name='mail'),
+    path('comments/<int:id>', comments, name='comments'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,
