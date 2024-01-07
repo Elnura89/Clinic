@@ -122,7 +122,7 @@ def contact(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        row = Applications.objects.create(name = name, email = email, message = message)
+        row = Message.objects.create(name = name, email = email, message = message)
         row.save()
 
     context = {}
@@ -151,9 +151,9 @@ def saveMail(request):
     Subscriptions.objects.create(mail=mail).save()
     return redirect('index')
 
-def video(request):
-    rows = MainVideo.objects.all()
-    context = {
-        'rows': rows
-    }
-    return render(request, 'video.html', context)
+# def video(request):
+#     rows = MainVideo.objects.all()
+#     context = {
+#         'rows': rows
+#     }
+#     return render(request, 'video.html', context)
